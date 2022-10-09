@@ -14,7 +14,7 @@
 3. Клиентская часть API у нас поддерживает `websocket`, но не умеет работать через обычный HTTP.
 Вот код клиента: [`client.js`](https://github.com/HowProgrammingWorks/DDD/blob/master/JavaScript/9-logger/static/client.js)
 Нужно разработать вариант функции `scaffold` (динамическое создание интерфейса для работы с серверным API в рантайме),
-которая бы поддерживала HTTP, лучше всего при на базе `fetch`. Добавим в функцию параметр `url`, в результате,
+которая бы поддерживала HTTP, лучше всего на базе `fetch`. Добавим в функцию параметр `url`, в результате,
 ее сигнатура будет: `scaffold(url, structure)`. Если не знаете с чего начать, то может помочь пример функции
 [`buildAPI`](https://github.com/HowProgrammingWorks/API/blob/master/JavaScript/1-HTTP/static/client.js),
 а при необходимости посмотрите дополнительное видео про [пересаживание API с HTTP на Websocket](https://www.youtube.com/watch?v=-az912XBCu8),

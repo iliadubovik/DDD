@@ -2,7 +2,7 @@
 
 const socket = new WebSocket('ws://127.0.0.1:8001/');
 
-const scaffold = (structure) => {
+const scaffold = (url, structure) => {
   const api = {};
   const services = Object.keys(structure);
   for (const serviceName of services) {

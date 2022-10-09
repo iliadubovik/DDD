@@ -1,18 +1,8 @@
 'use strict';
 
-const config = require('./config.js');
-
 const pg = require('pg');
 
-const pool = new pg.Pool({
-  host: config.db.host,
-  port: config.db.port,
-  database: config.db.database,
-  user: config.db.user,
-  password: config.db.password,
-});
-
-module.exports = (table) => ({
+const fn = (pool) => (table) => ({
   query(sql, args) {
     return pool.query(sql, args);
   },
@@ -58,4 +48,6 @@ module.exports = (table) => ({
     const sql = `DELETE FROM ${table} WHERE id = $1`;
     return pool.query(sql, [id]);
   },
-});
+})
+
+module.exports = (options) => fn(new pg.Pool(options));
