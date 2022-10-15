@@ -2,12 +2,19 @@
 
 const pg = require('pg');
 
-const fn = (pool) => (table) => ({
-  query(sql, args) {
-    return pool.query(sql, args);
+let pool = null;
+
+const init = (options) => {
+  pool = new pg.Pool(options);
+};
+
+const crud = (table) => ({
+  async query(sql, args) {
+    const result = await pool.query(sql, args);
+    return result.rows;
   },
 
-  read(id, fields = ['*']) {
+  async read(id, fields = ['*']) {
     const names = fields.join(', ');
     const sql = `SELECT ${names} FROM ${table}`;
     if (!id) return pool.query(sql);
@@ -44,10 +51,11 @@ const fn = (pool) => (table) => ({
     return pool.query(sql, data);
   },
 
-  delete(id) {
-    const sql = `DELETE FROM ${table} WHERE id = $1`;
+  async delete(id) {
+    const sql = 'DELETE FROM ${table} WHERE id = $1';
     return pool.query(sql, [id]);
   },
-})
+});
 
-module.exports = (options) => fn(new pg.Pool(options));
+
+module.exports = { init, crud };
