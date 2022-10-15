@@ -3,12 +3,13 @@
 const fsp = require('node:fs').promises;
 const path = require('node:path');
 const config = require('./config.js');
-const server = require(`./${config.api.transport}.js`);
+// const server = require(`./${config.api.transport}.js`);
 const staticServer = require('./static.js');
 const load = require('./load.js')(config.sandbox);
 const db = require('./db.js')(config.db);
 const hash = require('./hash.js');
 const logger = require('./logger.js');
+const transport = require(`./transport/${config.api.transport}.js`);
 
 const sandbox = {
   console: Object.freeze(logger),
@@ -28,5 +29,5 @@ const routing = {};
   }
 
   staticServer('./static', config.static.port);
-  server(routing, config.api.port);
+  transport(routing, config.api.port, logger);
 })();
